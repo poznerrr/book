@@ -1,18 +1,11 @@
 require('dotenv').config()
+const fortune= require('./lib/fortune')
 const express = require ('express')
 const expressHandlebars = require('express-handlebars')
 
 
 const app = express()
 const PORT = process.env.PORT || 22222
-
-const  fortunes  =  [
-    "Победи  свои  страхи,  или  они  победят  т е б я ." ,
-    "Рекам  нужны  и с т о к и ." ,
-    "Не  бойся  неведом ого.",
-    "Тебя  ждет  приятный  сю рприз.",
-    "Будь  проще  везде,  где  только  можно.",
-    ]
 
 //Настройка механизма представлений Handlebars
 app.engine('handlebars', expressHandlebars.engine({
@@ -28,7 +21,7 @@ app.get('/', (req, res) => {
 
 app.get('/about', (req, res) => {
     const randomFortune = fortunes[Math.floor(Math.random()*fortunes.length)]
-    res.render('about', {fortune: randomFortune})
+    res.render('about', {fortune: fortune.getFortune})
 });
 
 //Пользовательская страница 404
