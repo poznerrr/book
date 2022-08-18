@@ -25,8 +25,12 @@ app.use(handlers.notFound)
 
 //Пользовательская страница 500
 app.use(handlers.serverError)
-
-app.listen(PORT, () => console.log(
-    `Express запущен на порту ${PORT}; ` + 
-    `нажмите Crtl + C для завершения`
-))
+if (require.main === module) {
+    app.listen(PORT, () => console.log(
+        `Express запущен на порту ${PORT}; ` + 
+        `нажмите Crtl + C для завершения`
+    ))
+    
+} else {
+    module.exports = app
+}
