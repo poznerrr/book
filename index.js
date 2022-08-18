@@ -1,7 +1,7 @@
 require('dotenv').config()
-const fortune= require('./lib/fortune')
+const fortune = require('./lib/fortune')
 const handlers = require('./lib/handlers')
-const express = require ('express')
+const express = require('express')
 const expressHandlebars = require('express-handlebars')
 
 
@@ -27,10 +27,11 @@ app.use(handlers.notFound)
 app.use(handlers.serverError)
 if (require.main === module) {
     app.listen(PORT, () => console.log(
-        `Express запущен на порту ${PORT}; ` + 
+        `Express запущен на порту ${PORT}; ` +
         `нажмите Crtl + C для завершения`
     ))
-    
+
 } else {
     module.exports = app
 }
+/*новый коммент*/ 
