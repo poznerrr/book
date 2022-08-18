@@ -3,3 +3,15 @@
 <p>Возникли вопросы? Перейдите на стреницу
     <a href="/about" data-test-id="about">О нас</a>!
 </p>
+<div>
+    <form action="/process" method="post">
+        <input type="hidden" name="hush" val="Скрытое, но не секретное">
+        <div>
+            <label for="fieldColor"> Ваш любимый цвет:</label>
+            <input type="text" id="fieldColor" name="color">
+        </div>
+        <div>
+            <button type="submit"> Отправить</button>
+        </div>
+    </form>
+</div>
