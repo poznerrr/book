@@ -1,0 +1,86 @@
+<h1>players</h1>
+<button class="XMLHttp_button">Click me to call XMLHttpRequest</button>
+<button class="fetch_button">Click me to call fetch</button>
+<div class="players"></div>
+<script>
+    window.onload = () => {
+        document.querySelector('.XMLHttp_button').onclick = () => {
+            let xhttp = new XMLHttpRequest();
+            xhttp.onreadystatechange = function () {
+                if (this.readyState == 4 && this.status == 200) {
+                    myFunction(this.responseText)
+                }
+            }
+            xhttp.open("GET", "http://localhost:22222/get", true);
+            xhttp.send();
+
+            function myFunction(data) {
+                document.querySelector('.players').innerHTML += data;
+            }
+
+        }
+
+        let xhttp2 = new XMLHttpRequest();
+        xhttp2.onreadystatechange = function () {
+            if (this.readyState == 4 && this.status == 200) {
+                myFunction2(this.responseText)
+            }
+        }
+        xhttp2.open("POST", "http://localhost:22222/get", true);
+        xhttp2.setRequestHeader("Content-type", "application/x-www-form-urlencoded");
+        xhttp2.send('name=Василий');
+
+        function myFunction2(data) {
+            //document.querySelector('.players').innerHTML += data;
+            console.log("post");
+        }
+
+        document.querySelector('.fetch_button').onclick = () => {
+
+
+
+            let a = new Promise((resolve, reject) => {
+                fetch('http://localhost:22222/get')
+                    .then(data => resolve(data.text()))
+            })
+            let b = new Promise((resolve, reject) => {
+                fetch('http://localhost:22222/get')
+                    .then(data => resolve(data.text()))
+            })
+
+            a.then(data => {
+                document.querySelector('.players').innerHTML += data;
+            })
+            b.then(data => {
+                console.log(data + '=> fetch b');
+            })
+
+            Promise.all([a, b]).then(data => {
+                console.log('it is promise all');
+                console.log(data[0]);
+                console.log(data[1]);
+            });
+
+            fetch('http://localhost:22222/get', {
+                method: 'POST', // *GET, POST, PUT, DELETE, etc.
+                //mode: 'cors', // no-cors, *cors, same-origin
+                //cache: 'no-cache', // *default, no-cache, reload, force-cache, only-if-cached
+                //credentials: 'same-origin', // include, *same-origin, omit
+                headers: {
+                    //'Content-Type': 'application/json'
+                    'Content-Type': 'application/x-www-form-urlencoded',
+                },
+                redirect: 'follow', // manual, *follow, error
+                referrerPolicy: 'no-referrer', // no-referrer, *client
+                body: /*JSON.stringify(data)*/ 'name=Владислав' // body data type must match "Content-Type" header
+            }).then(response => response.text())
+                .then(response => {
+                    console.log(response);
+                });
+
+        }
+    }
+
+
+
+</script>
